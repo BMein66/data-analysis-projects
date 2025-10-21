@@ -1,0 +1,92 @@
+SELECT TOP 1000*
+FROM BooksDB.dbo.books;
+
+SELECT DISTINCT authors
+FROM BooksDB.dbo.books;
+
+SELECT TOP 1000*
+FROM BooksDB.dbo.books
+WHERE title IS NOT NULL;
+
+SELECT *
+FROM BooksDB.dbo.books
+WHERE original_publication_year < 1800;
+
+SELECT *
+FROM BooksDB.dbo.books
+
+
+SELECT *
+FROM BOOKSDB.dbo.books
+WHERE language_code LIKE 'en%';
+
+SELECT DISTINCT title, original_publication_year
+FROM BOOKSDB.dbo.books
+WHERE original_publication_year BETWEEN 1914 AND 1921;
+
+-- top 1000 table items from book_tags table ordered by tag_id:
+SELECT TOP 1000*
+FROM BOOKSDB.dbo.book_tags
+ORDER BY tag_id;
+
+SELECT COUNT (goodreads_book_id) 
+FROM BOOKSDB.dbo.book_tags
+GROUP BY tag_id;
+
+-- Create alias for book ID counts:
+SELECT COUNT (goodreads_book_id) AS 'Book IDs'
+FROM BOOKSDB.dbo.book_tags
+GROUP BY tag_id;
+
+-- Top 1000 descending from ratings dataset:
+SELECT TOP 1000*
+FROM BOOKSDB.dbo.ratings
+ORDER BY rating DESC;
+
+-- Total users who gave rating < 2:
+SELECT COUNT (*)
+FROM BOOKSDB.dbo.ratings
+WHERE RATING<2;
+
+-- SUM of books with rating >=4:
+SELECT SUM (*)
+FROM BOOKSDB.dbo.ratings
+WHERE RATING>=4;
+
+-- TABLE ITEMS WHERE TAG_NAME INCLUDES *MYSTERY*:
+SELECT *
+FROM BOOKSDB.dbo.tags
+WHERE TAG_NAME LIKE '%mystery%';
+
+SELECT *
+FROM BooksDB.dbo.tags
+WHERE tag_name < 'd' AND tag_name >= 'c';
+
+/*Query the total # of books each user wants to read in ascending order by userID under new alias */
+SELECT sum (user_id) AS 'Total Books To Read'
+FROM BOOKSDB.dbo.to_read
+GROUP BY USER_ID
+ORDER BY USER_ID;
+
+/*Query the total # of books each user wants to read in ascending order by userID under new alias */
+SELECT user_id, sum (user_id) AS 'Total Books To Read'
+FROM BOOKSDB.dbo.to_read
+GROUP BY USER_ID
+ORDER BY USER_ID;
+
+/*Query the total # of books each user wants to read with results sorted in descending order
+*/
+SELECT user_id, sum (user_id) AS 'Total Books To Read'
+FROM BOOKSDB.dbo.to_read
+GROUP BY USER_ID
+ORDER BY sum(user_id);
+
+SELECT user_id, sum (user_id) AS 'Total Books To Read'
+FROM BOOKSDB.dbo.to_read
+GROUP BY USER_ID
+ORDER BY sum(user_id) DESC;
+
+-- total number of distinct books that have a rating of 4 or higher:
+SELECT COUNT (DISTINCT book_id)
+FROM BOOKSDB.dbo.ratings
+WHERE RATING >= 4;
